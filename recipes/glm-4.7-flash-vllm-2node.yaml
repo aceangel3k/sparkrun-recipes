@@ -1,0 +1,26 @@
+model: unsloth/GLM-4.7-Flash-FP8-Dynamic
+runtime: vllm
+min_nodes: 2
+container: scitrera/dgx-spark-vllm:0.16.0-t5
+metadata:
+  description: GLM 4.7 Flash (FP8, 2-node vLLM cluster)
+  maintainer: scitrera.ai
+  model_params: 9B
+  model_dtype: fp8
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  tensor_parallel: 2
+  gpu_memory_utilization: 0.9
+  served_model_name: glm-4.7-flash
+  max_model_len: 262144
+command: |
+  vllm serve \
+    {model} \
+    --served-model-name {served_model_name} \
+    --gpu-memory-utilization {gpu_memory_utilization} \
+    -tp {tensor_parallel} \
+    --host {host} \
+    --port {port} \
+    --max-model-len {max_model_len} \
+    --trust-remote-code
