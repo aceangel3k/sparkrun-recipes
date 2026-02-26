@@ -1,0 +1,37 @@
+model: AliceThirty/Step-3.5-Flash-gguf:Q3_K_M
+runtime: llama-cpp
+max_nodes: 1
+container: scitrera/dgx-spark-llama-cpp:b8094-cu131
+metadata:
+  description: Step 3.5 Flash Q3_KM
+  maintainer: scitrera.ai
+  model_params: 8B
+  model_dtype: q3_k_m
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  n_gpu_layers: 999
+  ctx_size: 262144
+  threads: 20
+  parallel: 4
+  ubatch: 2048
+  flash_attn: 1
+  jinja: true
+  reasoning_format: auto
+  reasoning_budget: -1
+command: |
+  llama-server \
+    -hf {model} \
+    --host {host} \
+    --port {port} \
+    --ctx-size {ctx_size} \
+    --n-gpu-layers {n_gpu_layers} \
+    -t {threads} \
+    -np {parallel} \
+    --cont-batching \
+    -ub {ubatch} \
+    -fa {flash_attn} \
+    --jinja \
+    --reasoning-format {reasoning_format} \
+    --no-mmap \
+    --reasoning-budget {reasoning_budget}
