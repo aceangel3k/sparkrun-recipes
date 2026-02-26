@@ -1,4 +1,4 @@
-model: unsloth/GLM-4.7-Flash-GGUF
+model: unsloth/GLM-4.7-Flash-GGUF:Q4_K_M
 runtime: llama-cpp
 max_nodes: 1
 container: scitrera/dgx-spark-llama-cpp:b8094-cu131
