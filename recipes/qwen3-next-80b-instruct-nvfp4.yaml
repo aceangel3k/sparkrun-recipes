@@ -1,5 +1,5 @@
 model: nvidia/Qwen3-Next-80B-A3B-Instruct-NVFP4
-runtime: vllm
+runtime: generic
 max_nodes: 1
 container: avarok/dgx-vllm-nvfp4-kernel:v22
 metadata:
@@ -25,3 +25,4 @@ env:
   MAX_MODEL_LEN: {max_model_len}
   MAX_NUM_SEQS: {max_num_seqs}
   VLLM_EXTRA_ARGS: --attention-backend {attention_backend} --kv-cache-dtype fp8
+command: serve
