@@ -5,22 +5,36 @@ container: scitrera/dgx-spark-vllm:0.16.0-t5
 metadata:
   description: GLM 4.7 Flash (FP8, 2-node vLLM cluster)
   maintainer: scitrera.ai
-  model_params: 9B
+  model_params: 30B
+  active_params: 3B
   model_dtype: fp8
 defaults:
   port: 8000
   host: 0.0.0.0
-  tensor_parallel: 2
+  tensor_parallel: 1
+  pipeline_parallel: 2
   gpu_memory_utilization: 0.85
   served_model_name: glm-4.7-flash
   max_model_len: 200000
+  max_num_seqs: 64
+  max_num_batched_tokens: 4096
+  num_scheduler_steps: 4
+  tool_call_parser: glm47
+  reasoning_parser: glm45
 command: |
   vllm serve \
     {model} \
     --served-model-name {served_model_name} \
     --gpu-memory-utilization {gpu_memory_utilization} \
-    -tp {tensor_parallel} \
+    --tensor-parallel-size {tensor_parallel} \
+    --pipeline-parallel-size {pipeline_parallel} \
     --host {host} \
     --port {port} \
     --max-model-len {max_model_len} \
+    --max-num-seqs {max_num_seqs} \
+    --max-num-batched-tokens {max_num_batched_tokens} \
+    --num-scheduler-steps {num_scheduler_steps} \
+    --tool-call-parser {tool_call_parser} \
+    --reasoning-parser {reasoning_parser} \
+    --enable-chunked-prefill \
     --trust-remote-code
