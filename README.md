@@ -8,7 +8,7 @@ Converted the `llama-manager.sh` bash script into individual sparkrun YAML recip
 
 ## What Was Converted
 
-✅ **Main LLM Models** (19 recipes)
+✅ **Main LLM Models** (20 recipes)
 - GPT-OSS 120B & 20B
 - Qwen3-VL 30B
 - Qwen3-Next 80B (Thinking & Instruct variants)
@@ -20,7 +20,8 @@ Converted the `llama-manager.sh` bash script into individual sparkrun YAML recip
 - RNJ-1 8B
 - Nemotron 3 Nano 30B
 - Ministral 3 14B Instruct
-- GLM-4.7 Flash
+- GLM-4.7 Flash (llama.cpp solo)
+- GLM-4.7 Flash (vLLM 2-node cluster)
 - Step 3.5 Flash
 - Qwen3 Coder Next 80B
 - GLM-4.7 Flash Grande Heretic (Uncensored)
@@ -56,8 +57,11 @@ defaults:
 ## Usage
 
 ```bash
-# Run a specific model
+# Run a specific model (solo mode)
 sparkrun run recipes/gpt-oss-120b.yaml --solo
+
+# Run a 2-node vLLM cluster
+sparkrun run recipes/glm-4.7-flash-vllm-2node.yaml -H host1,host2
 
 # Override port
 sparkrun run recipes/qwen3-vl-30b.yaml -o port=9000
@@ -90,7 +94,8 @@ The original `llama-manager.sh` script has been moved to the `to-convert/` direc
 
 ## Notes
 
-- All recipes use the `llama-cpp` runtime with `max_nodes: 1` (solo mode only)
+- Most recipes use the `llama-cpp` runtime with `max_nodes: 1` (solo mode only)
+- The `glm-4.7-flash-vllm-2node.yaml` recipe uses the `vLLM` runtime with `min_nodes: 2` for multi-node tensor parallelism
 - Models with specific quantization variants use the `:quant` syntax (e.g., `:Q4_K_XL`)
 - Standard configuration includes flash attention, Jinja templates, and reasoning format support
 - Context size is set to 262144 tokens by default

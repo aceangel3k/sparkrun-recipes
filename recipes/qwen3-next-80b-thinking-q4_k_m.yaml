@@ -1,11 +1,11 @@
-model: unsloth/gpt-oss-120b-GGUF
+model: unsloth/Qwen3-Next-80B-A3B-Thinking-GGUF:Q4_K_M
 runtime: llama-cpp
 max_nodes: 1
 container: scitrera/dgx-spark-llama-cpp:b8094-cu131
 metadata:
-  description: GPT-OSS 120B (standard GGUF quants, ~60GB)
+  description: Qwen3-Next 80B Thinking (standard only, ~41GB)
   maintainer: scitrera.ai
-  model_params: 120B
+  model_params: 80B
   model_dtype: q4_k_m
 defaults:
   port: 8000

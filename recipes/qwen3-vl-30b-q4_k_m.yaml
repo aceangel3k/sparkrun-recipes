@@ -1,11 +1,11 @@
-model: unsloth/gpt-oss-20b-GGUF
+model: unsloth/Qwen3-VL-30B-A3B-Instruct-GGUF:Q4_K_M
 runtime: llama-cpp
 max_nodes: 1
 container: scitrera/dgx-spark-llama-cpp:b8094-cu131
 metadata:
-  description: GPT-OSS 20B (standard GGUF quants, ~12GB)
+  description: Qwen3-VL 30B (standard quants only, ~17GB, Vision-Language)
   maintainer: scitrera.ai
-  model_params: 20B
+  model_params: 30B
   model_dtype: q4_k_m
 defaults:
   port: 8000
