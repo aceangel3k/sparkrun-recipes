@@ -1,0 +1,28 @@
+model: nvidia/Qwen3-Next-80B-A3B-Instruct-NVFP4
+runtime: vllm
+max_nodes: 1
+container: avarok/dgx-vllm-nvfp4-kernel:v22
+metadata:
+  description: Qwen3-Next 80B Instruct NVFP4 (Marlin optimized)
+  maintainer: avarok.ai
+  model_params: 80B
+  model_dtype: nvfp4
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  gpu_memory_utilization: 0.90
+  max_model_len: 65536
+  max_num_seqs: 128
+  attention_backend: flashinfer
+env:
+  VLLM_USE_FLASHINFER_MOE_FP4: 0
+  VLLM_TEST_FORCE_FP8_MARLIN: 1
+  VLLM_NVFP4_GEMM_BACKEND: marlin
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+  MODEL: {model}
+  PORT: {port}
+  GPU_MEMORY_UTIL: {gpu_memory_utilization}
+  MAX_MODEL_LEN: {max_model_len}
+  MAX_NUM_SEQS: {max_num_seqs}
+  VLLM_EXTRA_ARGS: --attention-backend {attention_backend} --kv-cache-dtype fp8
+command: serve
