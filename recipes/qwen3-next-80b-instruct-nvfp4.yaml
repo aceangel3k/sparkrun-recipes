@@ -25,4 +25,4 @@ env:
   MAX_MODEL_LEN: {max_model_len}
   MAX_NUM_SEQS: {max_num_seqs}
   VLLM_EXTRA_ARGS: --attention-backend {attention_backend} --kv-cache-dtype fp8
-command: serve
+#command: serve

@@ -31,5 +31,4 @@ env:
   VLLM_EXTRA_ARGS: --attention-backend {attention_backend} --kv-cache-dtype fp8 --speculative-config '{speculative_config}' --no-enable-chunked-prefill
 command: |
   curl -fsSL https://raw.githubusercontent.com/Avarok-Cybersecurity/dgx-vllm/main/fix_mtp_nvfp4_exclusion.py -o /tmp/fix_mtp_nvfp4_exclusion.py && \
-  python /tmp/fix_mtp_nvfp4_exclusion.py && \
-  serve
+  python /tmp/fix_mtp_nvfp4_exclusion.py 
