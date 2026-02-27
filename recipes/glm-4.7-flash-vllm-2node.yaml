@@ -17,7 +17,6 @@ defaults:
   max_model_len: 200000
   max_num_seqs: 64
   max_num_batched_tokens: 4096
-  num_scheduler_steps: 4
   tool_call_parser: glm47
   reasoning_parser: glm45
 command: |
@@ -31,7 +30,6 @@ command: |
     --max-model-len {max_model_len} \
     --max-num-seqs {max_num_seqs} \
     --max-num-batched-tokens {max_num_batched_tokens} \
-    --num-scheduler-steps {num_scheduler_steps} \
     --tool-call-parser {tool_call_parser} \
     --reasoning-parser {reasoning_parser} \
     --enable-chunked-prefill \
