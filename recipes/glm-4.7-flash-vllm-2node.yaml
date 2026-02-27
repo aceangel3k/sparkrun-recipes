@@ -11,8 +11,7 @@ metadata:
 defaults:
   port: 8000
   host: 0.0.0.0
-  tensor_parallel: 1
-  pipeline_parallel: 2
+  tensor_parallel: 2
   gpu_memory_utilization: 0.85
   served_model_name: glm-4.7-flash
   max_model_len: 200000
@@ -26,8 +25,7 @@ command: |
     {model} \
     --served-model-name {served_model_name} \
     --gpu-memory-utilization {gpu_memory_utilization} \
-    --tensor-parallel-size {tensor_parallel} \
-    --pipeline-parallel-size {pipeline_parallel} \
+    -tp {tensor_parallel} \
     --host {host} \
     --port {port} \
     --max-model-len {max_model_len} \
