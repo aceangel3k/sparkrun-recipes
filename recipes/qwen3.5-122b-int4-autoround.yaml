@@ -1,0 +1,23 @@
+model: Intel/Qwen3.5-122B-A10B-int4-AutoRound
+runtime: vllm-ray
+max_nodes: 1
+container: vllm-node
+metadata:
+  description: Qwen3.5 122B int4 AutoRound quantized model
+  maintainer: sparkrun-recipes
+  model_params: 122B
+  model_dtype: int4
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  gpu_memory_utilization: 0.70
+  max_model_len: 65536
+  attention_backend: flashinfer
+  tensor_parallel: 2
+env:
+  MODEL: {model}
+  PORT: {port}
+  GPU_MEMORY_UTIL: {gpu_memory_utilization}
+  MAX_MODEL_LEN: {max_model_len}
+  VLLM_EXTRA_ARGS: --attention-backend {attention_backend} --reasoning-parser qwen3 --served-model-name qwen --enable-prefix-caching --distributed-executor-backend ray -tp {tensor_parallel}
+command: serve
