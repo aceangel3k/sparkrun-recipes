@@ -86,7 +86,7 @@ sparkrun run recipes/open-webui.yaml
 sparkrun run recipes/open-webui.yaml -o api_host=192.168.1.100
 
 # Custom web port
-sparkrun run recipes/open-webui.yaml -o web_port=8080
+sparkrun run recipes/open-webui.yaml -o port=8080
 
 # Custom API port (if your model runs on a different port)
 sparkrun run recipes/open-webui.yaml -o api_port=9000
@@ -104,21 +104,11 @@ sparkrun run recipes/open-webui.yaml
 # 3. Access the web UI at http://localhost:3000
 ```
 
-### Troubleshooting
-
-If you see "Error: Docker not accessible", ensure that:
-1. Docker is installed on the remote cluster nodes
-2. The Docker daemon is running
-3. The `/var/run/docker.sock` mount is working properly
-
-The recipe automatically mounts the Docker socket from the host, allowing the Open WebUI container to run Docker commands on the host.
-
 ### Configuration Options
 
-- `web_port`: Port for the Open WebUI web interface (default: 3000)
+- `port`: Port for the Open WebUI web interface (default: 3000)
 - `api_host`: Host where your model's API is running (default: localhost)
 - `api_port`: Port where your model's API is running (default: 8000)
-- `volume_name`: Docker volume name for persistent data (default: open-webui)
 
 ## Key Differences from Original Script
 
