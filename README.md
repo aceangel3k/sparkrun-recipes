@@ -104,6 +104,15 @@ sparkrun run recipes/open-webui.yaml
 # 3. Access the web UI at http://localhost:3000
 ```
 
+### Troubleshooting
+
+If you see "Error: Docker not accessible", ensure that:
+1. Docker is installed on the remote cluster nodes
+2. The Docker daemon is running
+3. The `/var/run/docker.sock` mount is working properly
+
+The recipe automatically mounts the Docker socket from the host, allowing the Open WebUI container to run Docker commands on the host.
+
 ### Configuration Options
 
 - `web_port`: Port for the Open WebUI web interface (default: 3000)

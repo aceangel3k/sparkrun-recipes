@@ -1,6 +1,9 @@
 description: Open WebUI - OpenAI-compatible web interface for LLMs
 container: ghcr.io/open-webui/open-webui:main
 
+volumes:
+  /var/run/docker.sock: /var/run/docker.sock
+
 defaults:
   web_port: 3000
   api_host: localhost
@@ -8,6 +11,13 @@ defaults:
   volume_name: open-webui
 
 command: |
+  # Verify Docker is accessible via mounted socket
+  if ! docker info &> /dev/null; then
+    echo "Error: Docker not accessible. Ensure /var/run/docker.sock is properly mounted."
+    exit 1
+  fi
+  
+  # Run Open WebUI
   docker run -d -p {web_port}:8080 \
     -v {volume_name}:/app/backend/data \
     --name open-webui \
