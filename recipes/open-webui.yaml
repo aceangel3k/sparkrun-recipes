@@ -1,0 +1,16 @@
+description: Open WebUI - OpenAI-compatible web interface for LLMs
+container: ghcr.io/open-webui/open-webui:main
+
+defaults:
+  web_port: 3000
+  api_host: localhost
+  api_port: 8000
+  volume_name: open-webui
+
+command: |
+  docker run -d -p {web_port}:8080 \
+    -v {volume_name}:/app/backend/data \
+    --name open-webui \
+    --restart always \
+    -e OPENAI_API_BASE_URL=http://{api_host}:{api_port}/v1 \
+    {container}
