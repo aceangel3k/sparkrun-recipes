@@ -70,6 +70,47 @@ sparkrun run recipes/qwen3-vl-30b.yaml -o port=9000
 sparkrun run recipes/glm-4.7-flash.yaml -o ctx_size=131072
 ```
 
+## Open WebUI
+
+Open WebUI provides an OpenAI-compatible web interface for interacting with your models.
+
+### Starting Open WebUI
+
+First, ensure your model is running, then start Open WebUI:
+
+```bash
+# Start Open WebUI (connects to localhost:8000)
+sparkrun run recipes/open-webui.yaml
+
+# Connect to remote spark backend
+sparkrun run recipes/open-webui.yaml -o api_host=192.168.1.100
+
+# Custom web port
+sparkrun run recipes/open-webui.yaml -o web_port=8080
+
+# Custom API port (if your model runs on a different port)
+sparkrun run recipes/open-webui.yaml -o api_port=9000
+```
+
+### Usage Example
+
+```bash
+# 1. Start your model
+sparkrun run recipes/qwen3-vl-30b.yaml --solo
+
+# 2. In another terminal, start Open WebUI
+sparkrun run recipes/open-webui.yaml
+
+# 3. Access the web UI at http://localhost:3000
+```
+
+### Configuration Options
+
+- `web_port`: Port for the Open WebUI web interface (default: 3000)
+- `api_host`: Host where your model's API is running (default: localhost)
+- `api_port`: Port where your model's API is running (default: 8000)
+- `volume_name`: Docker volume name for persistent data (default: open-webui)
+
 ## Key Differences from Original Script
 
 1. **No interactive menu** - Each model is now a separate recipe file
