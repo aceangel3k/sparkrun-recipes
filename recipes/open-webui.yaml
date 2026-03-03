@@ -9,3 +9,7 @@ defaults:
 env:
   WEBUI_PORT: "{port}"
   OPENAI_API_BASE_URL: "http://{api_host}:{api_port}/v1"
+
+command: |
+  # Let the container's default entrypoint run
+  exec
