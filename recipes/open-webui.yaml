@@ -31,20 +31,11 @@ command: |
   docker rm -f open-webui 2>/dev/null || true
   
   # Run Open WebUI in detached mode
-  docker run -d \
+  docker run \
     -p {web_port}:8080 \
     -v {volume_name}:/app/backend/data \
     --name open-webui \
     --restart always \
     -e OPENAI_API_BASE_URL=http://{api_host}:{api_port}/v1 \
-    ghcr.io/open-webui/open-webui:main
-  
-  echo "Open WebUI container launched"
-  
-  # Keep alive: follow logs and monitor container
-  while docker inspect open-webui &> /dev/null; do
-    docker logs --tail=10 open-webui 2>&1 || true
-    sleep 2
-  done
-  
-  echo "Open WebUI container exited"
+    ghcr.io/open-webui/open-webui:main \
+    bash
