@@ -40,7 +40,7 @@ command: |
     ghcr.io/open-webui/open-webui:main
   
   echo "Open WebUI container launched successfully"
-  echo "Following logs (Ctrl-C to stop following, container will continue running):"
+  echo "Following logs - Ctrl-C to stop following, container will continue running:"
   echo ""
   
   # Follow logs to keep the sparkrun process alive
