@@ -14,6 +14,7 @@ env:
   OPENAI_API_BASE_URL: "http://{api_host}:{api_port}/v1"
 
 command: |
+  touch /tmp/sparkrun_serve.log
   exec > /tmp/sparkrun_serve.log 2>&1
   
   echo "Starting Open WebUI with Docker socket mount..."
