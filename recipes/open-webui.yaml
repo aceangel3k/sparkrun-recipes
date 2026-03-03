@@ -31,7 +31,7 @@ command: |
   docker rm -f open-webui 2>/dev/null || true
   
   # Run Open WebUI in detached mode
-  docker run -d \
+  docker run \
     -p {web_port}:8080 \
     -v {volume_name}:/app/backend/data \
     --name open-webui \
