@@ -80,26 +80,26 @@ First, ensure your model is running, then start Open WebUI:
 
 ```bash
 # Start Open WebUI (connects to localhost:8000)
-sparkrun run recipes/open-webui.yaml
+sparkrun run open-webui --solo
 
 # Connect to remote spark backend
-sparkrun run recipes/open-webui.yaml -o api_host=192.168.1.100
+sparkrun run open-webui --solo -o api_host=192.168.1.100
 
 # Custom web port
-sparkrun run recipes/open-webui.yaml -o port=8080
+sparkrun run open-webui --solo -o web_port=8080
 
 # Custom API port (if your model runs on a different port)
-sparkrun run recipes/open-webui.yaml -o api_port=9000
+sparkrun run open-webui --solo -o api_port=9000
 ```
 
 ### Usage Example
 
 ```bash
 # 1. Start your model
-sparkrun run recipes/qwen3-vl-30b.yaml --solo
+sparkrun run qwen3-vl-30b --solo
 
 # 2. In another terminal, start Open WebUI
-sparkrun run recipes/open-webui.yaml
+sparkrun run open-webui --solo
 
 # 3. Access the web UI at http://localhost:3000
 ```

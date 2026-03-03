@@ -1,15 +1,47 @@
 description: Open WebUI - OpenAI-compatible web interface for LLMs
 container: ghcr.io/open-webui/open-webui:main
 
+volumes:
+  /var/run/docker.sock: /var/run/docker.sock
+
 defaults:
-  port: 3000
+  web_port: 3000
   api_host: localhost
   api_port: 8000
+  volume_name: open-webui
 
 env:
-  WEBUI_PORT: "{port}"
   OPENAI_API_BASE_URL: "http://{api_host}:{api_port}/v1"
 
 command: |
-  # Let the container's default entrypoint run
-  exec
+  echo "Starting Open WebUI with Docker socket mount..."
+  
+  # Verify Docker is accessible
+  if ! docker info &> /dev/null; then
+    echo "Error: Docker not accessible"
+    exit 1
+  fi
+  
+  echo "Docker socket accessible, launching Open WebUI container..."
+  echo "Web UI will be available at http://{api_host}:{web_port}"
+  echo "Connecting to API at http://{api_host}:{api_port}/v1"
+  echo ""
+  
+  # Remove existing container if present
+  docker rm -f open-webui 2>/dev/null || true
+  
+  # Run Open WebUI in detached mode
+  docker run -d \
+    -p {web_port}:8080 \
+    -v {volume_name}:/app/backend/data \
+    --name open-webui \
+    --restart always \
+    -e OPENAI_API_BASE_URL=http://{api_host}:{api_port}/v1 \
+    ghcr.io/open-webui/open-webui:main
+  
+  echo "Open WebUI container launched successfully"
+  echo "Following logs (Ctrl-C to stop following, container will continue running):"
+  echo ""
+  
+  # Follow logs to keep the sparkrun process alive
+  docker logs -f open-webui
