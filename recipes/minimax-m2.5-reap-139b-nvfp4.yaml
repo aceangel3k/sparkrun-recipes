@@ -1,0 +1,51 @@
+# Recipe: MiniMax-M2.5-REAP-139B-NVFP4
+# MiniMax M2.5 REAP 139B model with NVFP4 quantization for DGX Spark
+
+recipe_version: "1"
+
+name: MiniMax-M2.5-REAP-139B-NVFP4
+description: vLLM serving MiniMax-M2.5-REAP-139B-A10B-NVFP4-GB10 with Marlin backend (75GB model, requires ~121GB+ VRAM)
+
+# HuggingFace model to download (optional, for --download-model)
+model: saricles/MiniMax-M2.5-REAP-139B-A10B-NVFP4-GB10
+
+# Container image to use
+container: avarok/dgx-vllm-nvfp4-kernel:v23
+
+# Can run on single GPU with sufficient VRAM (121GB+ recommended)
+cluster_only: false
+
+# No mods required
+mods: []
+
+# Default settings (can be overridden via CLI)
+defaults:
+  port: 8000
+  host: 0.0.0.0
+  tensor_parallel: 1
+  gpu_memory_utilization: 0.93
+  max_model_len: 131072
+
+# Environment variables required for NVFP4
+env:
+  VLLM_NVFP4_GEMM_BACKEND: marlin
+  VLLM_TEST_FORCE_FP8_MARLIN: "1"
+  VLLM_USE_FLASHINFER_MOE_FP4: "0"
+  VLLM_MARLIN_USE_ATOMIC_ADD: "1"
+  PYTORCH_CUDA_ALLOC_CONF: expandable_segments:True
+
+# The vLLM serve command template
+command: |
+  vllm serve saricles/MiniMax-M2.5-REAP-139B-A10B-NVFP4-GB10 \
+    --trust-remote-code \
+    --port {port} \
+    --host {host} \
+    --gpu-memory-utilization {gpu_memory_utilization} \
+    -tp {tensor_parallel} \
+    --max-model-len {max_model_len} \
+    --load-format compressed_tensors \
+    --kv-cache-dtype fp8 \
+    --attention-backend flashinfer \
+    --enable-auto-tool-choice \
+    --tool-call-parser minimax_m2 \
+    --reasoning-parser minimax_m2_append_think
