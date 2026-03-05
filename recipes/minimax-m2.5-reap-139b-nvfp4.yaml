@@ -43,7 +43,6 @@ command: |
     --gpu-memory-utilization {gpu_memory_utilization} \
     -tp {tensor_parallel} \
     --max-model-len {max_model_len} \
-    --load-format compressed_tensors \
     --kv-cache-dtype fp8 \
     --attention-backend flashinfer \
     --enable-auto-tool-choice \
