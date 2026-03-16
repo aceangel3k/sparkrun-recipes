@@ -34,7 +34,7 @@ defaults:
   max_model_len: 65536
   max_num_batched_tokens: 4176
   max_num_seqs: 2
-  gpu_memory_utilization_gb: 112
+  gpu_memory_utilization_gb: 100
 
 # The vLLM serve command template
 command: |
